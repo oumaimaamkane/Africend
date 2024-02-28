@@ -34,10 +34,10 @@ class DeliveryNoteResource extends Resource
         return $table
         ->columns([
             Tables\Columns\TextColumn::make('reference')
-            ->label(__('filament::resources/warehouses.deliery_notes.form.reference'))
+            ->label(__('filament::resources/deliveryNotes.deliery_notes.form.reference'))
             ->searchable(),
             Tables\Columns\TextColumn::make('user')
-            ->label(__('filament::resources/warehouses.deliery_notes.form.seller'))                
+            ->label(__('filament::resources/deliveryNotes.deliery_notes.form.seller'))                
             ->formatStateUsing(fn($state) => $state->firstname . ' ' . $state->lastname)
             ->hidden(function(){
                 if(auth()->user()->hasRole('Seller')){
@@ -45,7 +45,7 @@ class DeliveryNoteResource extends Resource
                 }
             }),
             Tables\Columns\TextColumn::make('nbr_orders')
-            ->label(__('filament::resources/warehouses.deliery_notes.form.nbr_orders')),
+            ->label(__('filament::resources/deliveryNotes.deliery_notes.form.nbr_orders')),
             // Tables\Columns\TextColumn::make('pickup_city'),
             // Tables\Columns\TextColumn::make('pickup_address'),
         ])
@@ -77,10 +77,10 @@ class DeliveryNoteResource extends Resource
             Tables\Actions\ViewAction::make(),
             Tables\Actions\ActionGroup::make([
                 Tables\Actions\Action::make('A4(x4)')
-                ->url(fn (DeliveryNote $record): string => route('filament.resources.orders-resource.pages.print-labels' , ['number' => 4 , 'record' => $record])),
+                ->url(fn (DeliveryNote $record): string => route('filament.'. Filament::getCurrentPanel()->getId().'.resources.delivery-notes.print-labels' , ['number' => 4 , 'record' => $record])),
 
             ])
-            ->label(__('filament::resources/warehouses.actions.print_labels'))
+            ->label(__('filament::resources/deliveryNotes.actions.print_labels'))
             ->icon('heroicon-s-printer')
             ->color('gray')
             ->link(),
@@ -107,6 +107,8 @@ class DeliveryNoteResource extends Resource
             'index' => Pages\ListDeliveryNotes::route('/'),
             'create' => Pages\CreateDeliveryNote::route('/create'),
             'edit' => Pages\EditDeliveryNote::route('/{record}/edit'),
+            'view' => Pages\viewDeliveryNote::route('/{record}'),
+            'print-labels' => Pages\printLabels::route('/labels/{number}/{record}'),
         ];
     }
 }

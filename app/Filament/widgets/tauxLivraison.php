@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Seller\Widgets;
+namespace App\Filament\Widgets;
 use App\Models\Order;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
